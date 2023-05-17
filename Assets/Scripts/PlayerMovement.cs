@@ -94,17 +94,23 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
-
     //Single Jump & Character Reset
-    /*private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Platform"))
+    private void OnCollisionEnter2D(Collision2D other)
+    {       
+        if (other.gameObject.CompareTag("bottomBorder"))
         {
-            isJumping = false;
-        }        
-    }*/    
+            if (gameObject.CompareTag("Player1"))
+            {
+                Destroy(GameObject.FindWithTag("Player"));
+            }
+            else if (gameObject.CompareTag("Player2"))
+            {
+                Destroy(GameObject.FindWithTag("Player"));
+            }
 
+        }
+    }
+    
     //Character flip
     void flip()
     {   
