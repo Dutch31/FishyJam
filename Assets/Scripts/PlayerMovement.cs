@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode attack;
 
     public Animator animator;
-    
 
+    private bool IsJumping;
     public float movespeed = 4;
     public float jumpForce = 8;    
     private bool Walking;
@@ -57,9 +57,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetKeyDown(jump))
-        {         
+        if (Input.GetKeyDown(jump) && !IsJumping)
+        {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);            
+            IsJumping = true;
 
             animator.SetBool("IsWalking", false);
             animator.SetTrigger("Jump");
@@ -95,7 +96,12 @@ public class PlayerMovement : MonoBehaviour
 
     //Single Jump & Character Reset
     private void OnCollisionEnter2D(Collision2D other)
-    {       
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            IsJumping = false;
+        }
+
         if (other.gameObject.CompareTag("bottomBorder"))
         {
             if (gameObject.CompareTag("Player"))
