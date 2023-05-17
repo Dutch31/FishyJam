@@ -16,7 +16,12 @@ public class PlayerMovement : MonoBehaviour
     public float movespeed = 4;
     public float jumpForce = 8;
     private bool isJumping;
+    private bool Walking;
     public bool facingRight;
+
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
 
     private Rigidbody2D rb2D;
     
@@ -34,19 +39,21 @@ public class PlayerMovement : MonoBehaviour
         {
             rb2D.velocity = new Vector2(-movespeed, rb2D.velocity.y);
             animator.SetBool("IsWalking", true);
+            Walking = true;
             flip();
         }
         else if (Input.GetKey(right))
         {
             rb2D.velocity = new Vector2(movespeed, rb2D.velocity.y);
             animator.SetBool("IsWalking", true);
+            Walking = true;
             flip2();
         }
         else
         {
             rb2D.velocity = new Vector2(0, rb2D.velocity.y);
             animator.SetBool("IsWalking", false);
-            
+            Walking = false;            
         }
 
         // Jump
@@ -60,14 +67,34 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //Attack
-        if (Input.GetKeyDown(attack))
+        if (Input.GetKeyDown(attack) && !Walking)
         {
             animator.SetTrigger("Attack1");
-            animator.SetTrigger("Attack2");
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            // damage them
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                Debug.Log("hit");
+                enemy.GetComponent<EnemyHealth>().TakeDamage(25);
+            }
         }
-       
+        else if (Input.GetKeyDown(attack) && Walking)
+        {
+            animator.SetTrigger("Attack2");
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            // damage them
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                Debug.Log("hit 2");
+                enemy.GetComponent<EnemyHealth>().TakeDamage(25);
+            }
+        }
+
+        
 
     }
+
+
 
     //Single Jump & Character Reset
     private void OnCollisionEnter2D(Collision2D other)
@@ -113,5 +140,16 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
-    
+
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+        {
+            Debug.Log("Hit");
+            return;
+        }
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
 }
