@@ -154,7 +154,7 @@ MonoBehaviour:
   attack: 303
   animator: {fileID: 7889786327911900917}
   movespeed: 4
-  jumpForce: 5
+  jumpForce: 7
   facingRight: 1
   attackPoint: {fileID: 7889786329526095761}
   attackRange: 0.5
