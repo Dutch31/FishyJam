@@ -99,14 +99,10 @@ public class PlayerMovement : MonoBehaviour
     {       
         if (other.gameObject.CompareTag("bottomBorder"))
         {
-            if (gameObject.CompareTag("Player1"))
+            if (gameObject.CompareTag("Player"))
             {
                 Destroy(GameObject.FindWithTag("Player"));
-            }
-            else if (gameObject.CompareTag("Player2"))
-            {
-                Destroy(GameObject.FindWithTag("Player"));
-            }
+            }          
 
         }
     }
