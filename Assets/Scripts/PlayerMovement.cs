@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -102,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
             if (gameObject.CompareTag("Player"))
             {
                 Destroy(GameObject.FindWithTag("Player"));
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }          
 
         }
