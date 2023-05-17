@@ -15,8 +15,7 @@ public class PlayerMovement : MonoBehaviour
     
 
     public float movespeed = 4;
-    public float jumpForce = 8;
-    private bool isJumping;
+    public float jumpForce = 8;    
     private bool Walking;
     public bool facingRight;
 
@@ -58,10 +57,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetKeyDown(jump) && !isJumping)
+        if (Input.GetKeyDown(jump))
         {         
-            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
-            isJumping= true;
+            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);            
 
             animator.SetBool("IsWalking", false);
             animator.SetTrigger("Jump");

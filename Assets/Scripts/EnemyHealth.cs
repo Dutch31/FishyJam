@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
             currentHealth -= damage;
             Debug.Log("Damage");
         }
-        if (currentHealth < 25) 
+        if (currentHealth <= 25) 
         {
             currentHealth -= damage;
             Debug.Log("Fatal Damage");
@@ -40,7 +40,7 @@ public class EnemyHealth : MonoBehaviour
         {            
             animator.SetBool("IsDead", true);
             isDead = true;
-            Destroy(GameObject.FindWithTag("Enemy"), 1);
+            Destroy(GameObject.FindWithTag("Enemy"), 2);
 
             Debug.Log("Enemy Killed");
         }
